@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <unordered_map>
 #include "recursive.h"
 #include "hw4.h"
@@ -74,7 +76,9 @@ list_t hash_2( list_t list ){
    return hash;
 }
 
-
+/*
+  returns number of repeating numbers 
+*/
 void collision( list_t list ){
   
   int temp;
@@ -88,12 +92,70 @@ void collision( list_t list ){
       collision++;
     list = list_rest( list );
   }
-  
   std::cout<<collision;
+}
+
+/*
+  retruns difreance in lists
+*/
+
+list_t compare( list_t list, list_t list2){
+  list_t compare = list_make();
+  int dif;
+  while( !list_isEmpty(list) ){
+    dif = list_first( list ) - list_first( list2);
+    compare = list_make( dif, compare);
+    list = list_rest( list );
+    list2= list_rest(list2);
+  }
+  compare = reverse (compare);
+  return compare;
 
 }
 
 int main(){
+  
+  std::ifstream file("old_code.in");
+
+  list_t hashInput1 = list_make();
+  list_t hashOutput1 = list_make();
+  list_t dif1 = list_make();
+
+  list_t hashInput2 = list_make();
+  list_t hashOutput2 = list_make();
+  list_t dif2 = list_make();
+  std::string line; // only grabs first int gix in mornig 
+  
+  int value;
+  int list = 0;
+  while(std::getline(file, line)){
+    std::stringstream lineStream(line);
+    while(lineStream >> value){
+      if( list == 0)
+        hashInput1 = list_make( value, hashInput1 );
+      if( list == 1)
+        hashOutput1 = list_make( value, hashOutput1 );
+      if( list == 2)
+        hashInput2 = list_make( value, hashInput2 );
+      if( list == 3)
+        hashOutput2 = list_make( value, hashOutput2 );
+    }
+    list++;
+  }
+  hashInput1= reverse(hashInput1);
+  hashOutput1 = reverse(hashOutput1);
+  hashInput2 = reverse(hashInput2);
+  hashOutput2 = reverse(hashOutput2);
+
+
+  list_print(hashInput1);
+  hashInput1 =  fib_hash(hashInput1);
+  list_print(hashInput1);
+  list_print(hashOutput1);
+  dif1 = compare( hashInput1, hashOutput1);
+  list_print(dif1);
+  
+/*
   list_t input = list_make();
   list_t hashFib = list_make();
   list_t hash2 = list_make();
@@ -112,7 +174,7 @@ int main(){
   list_print(hash2);
 
   collision(hashFib);
-  std::cout<<std::endl;
+  std::cout<<std::endl;*/
   return 0;
 
 }
