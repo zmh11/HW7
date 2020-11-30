@@ -1,7 +1,12 @@
 #include <iostream>
+#include <unordered_map>
 #include "recursive.h"
 #include "hw4.h"
 
+/*
+  given a list retrun a new list using the folowing has function
+  the hash value is the Fibonacci number of the key + the sum of all the items in the list.  
+*/
 list_t fib_hash( list_t list){
   list_t hash = list_make();
   int sumTotal = sum(list);
@@ -15,6 +20,9 @@ list_t fib_hash( list_t list){
   return hash;
 }
 
+/*
+  retruns true if number is not prime 
+*/
 bool prime( int num){
   if (num == 0 || num ==1)
     return true; 
@@ -26,6 +34,11 @@ bool prime( int num){
     return false;
 }
 
+/* 
+  create a list for keys given in list using the folowing rules 
+  odd_fn =  product of the odd number + key
+  even_fn =  (sum the results of the odd_fn hash after removing any prime numbers) + key
+ */
 list_t hash_2( list_t list ){
   list_t hash = list_make();
   list_t odd = list_make();
@@ -62,6 +75,23 @@ list_t hash_2( list_t list ){
 }
 
 
+void collision( list_t list ){
+  
+  int temp;
+  int collision = 0;
+  std::unordered_map< int,int > compare;
+  while( !list_isEmpty(list) ){
+    temp = list_first( list );
+    if ( compare.find( temp ) == compare.end() )
+      compare[temp]++;
+    else
+      collision++;
+    list = list_rest( list );
+  }
+  
+  std::cout<<collision;
+
+}
 
 int main(){
   list_t input = list_make();
@@ -81,6 +111,8 @@ int main(){
   hash2 = hash_2(input);
   list_print(hash2);
 
+  collision(hashFib);
+  std::cout<<std::endl;
   return 0;
 
 }
