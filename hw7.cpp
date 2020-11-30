@@ -79,7 +79,7 @@ list_t hash_2( list_t list ){
 /*
   returns number of repeating numbers 
 */
-void collision( list_t list ){
+int collision( list_t list ){
   
   int temp;
   int collision = 0;
@@ -92,7 +92,7 @@ void collision( list_t list ){
       collision++;
     list = list_rest( list );
   }
-  std::cout<<collision;
+  return collision;
 }
 
 /*
@@ -104,6 +104,7 @@ list_t compare( list_t list, list_t list2){
   int dif;
   while( !list_isEmpty(list) ){
     dif = list_first( list ) - list_first( list2);
+    dif = std::abs(dif);
     compare = list_make( dif, compare);
     list = list_rest( list );
     list2= list_rest(list2);
@@ -148,33 +149,29 @@ int main(){
   hashOutput2 = reverse(hashOutput2);
 
 
-  list_print(hashInput1);
   hashInput1 =  fib_hash(hashInput1);
-  list_print(hashInput1);
-  list_print(hashOutput1);
   dif1 = compare( hashInput1, hashOutput1);
+  std::cout<<"Test1 final_diff_output : ";
   list_print(dif1);
-  
-/*
-  list_t input = list_make();
-  list_t hashFib = list_make();
-  list_t hash2 = list_make();
+  std::cout<<std::endl;
 
-  for (int i= 1; i <= 6; i++)
-    input =  input = list_make( i , input);
-  input = reverse( input );
-  std::cout<<"hash test" << std::endl;
-  list_print(input);
-  hashFib = fib_hash(input);
-  list_print(hashFib);
+  std::cout<<"Test2 final_diff_output : ";
+  hashInput2 =  hash_2(hashInput2);
+  dif2 = compare( hashInput2, hashOutput2);
+  list_print(dif2);
+  std::cout<<std::endl;
 
-  std::cout<<std::endl<<"hash2 test" << std::endl;
-  list_print(input);
-  hash2 = hash_2(input);
-  list_print(hash2);
+  std::cout << std::endl << "collision cnt" << std::endl;
+  std::cout << "test 1 " << std::endl;
+  std::cout << "new_code : " << collision(hashInput1)  << std::endl;
+  std::cout << "old_code : " <<  collision(hashOutput1)  << std::endl;
 
-  collision(hashFib);
-  std::cout<<std::endl;*/
+  std::cout << std::endl << "collision cnt" << std::endl;
+  std::cout << "test 1 " << std::endl;
+  std::cout << "new_code : " << collision(hashInput2)  << std::endl;
+  std::cout << "old_code : " <<  collision(hashOutput2)  << std::endl;
+
+
   return 0;
 
 }
