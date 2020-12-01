@@ -7,7 +7,7 @@
 
 /*
   given a list retrun a new list using the folowing has function
-  the hash value is the Fibonacci number of the key + the sum of all the items in the list.  
+  the hash value is the Fibonacci number of the key + the sum of all the items in the list.
 */
 list_t fib_hash( list_t list){
   list_t hash = list_make();
@@ -23,21 +23,21 @@ list_t fib_hash( list_t list){
 }
 
 /*
-  retruns true if number is not prime 
+  retruns true if number is not prime
 */
 bool prime( int num){
   if (num == 0 || num ==1)
-    return true; 
+    return true;
   else {
     for(int k = 2; k <= num / 2; num++)
-      if (num  % k == 0)
+      if (num % k == 0)
         return true;
   }
     return false;
 }
 
-/* 
-  create a list for keys given in list using the folowing rules 
+/*
+  create a list for keys given in list using the folowing rules
   odd_fn =  product of the odd number + key
   even_fn =  (sum the results of the odd_fn hash after removing any prime numbers) + key
  */
@@ -57,16 +57,17 @@ list_t hash_2( list_t list ){
       odd_fn = list_make( insert, odd_fn);
      }
     list2 = list_rest(list2);
-}  
+}
   list_t noPrime = list_make();
   noPrime = filter (odd_fn , (*prime) );
   int sumNoPrime = sum(noPrime);
+
    while( !list_isEmpty(list) ){
      int temp = list_first( list );
      int insert;
      if ( temp % 2 == 0)
       insert = sumNoPrime + temp;
-    else 
+    else
       insert = productOdd + temp;
 
     hash = list_make( insert, hash);
@@ -77,10 +78,10 @@ list_t hash_2( list_t list ){
 }
 
 /*
-  returns number of repeating numbers 
+  returns number of repeating numbers
 */
 int collision( list_t list ){
-  
+
   int temp;
   int collision = 0;
   std::unordered_map< int,int > compare;
@@ -115,9 +116,8 @@ list_t compare( list_t list, list_t list2){
 }
 
 int main(){
-  
-  std::ifstream file("old_code.in");
 
+ 
   list_t hashInput1 = list_make();
   list_t hashOutput1 = list_make();
   list_t dif1 = list_make();
@@ -125,11 +125,11 @@ int main(){
   list_t hashInput2 = list_make();
   list_t hashOutput2 = list_make();
   list_t dif2 = list_make();
-  std::string line; // only grabs first int gix in mornig 
-  
+  std::string line; // only grabs first int gix in mornig
+
   int value;
   int list = 0;
-  while(std::getline(file, line)){
+  while(getline(std::cin, line)){
     std::stringstream lineStream(line);
     while(lineStream >> value){
       if( list == 0)
