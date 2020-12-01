@@ -165,7 +165,7 @@ int main(){
   std::cout << "old_code : " <<  collision(hashOutput1)  << std::endl;
 
   std::cout << std::endl << "collision cnt" << std::endl;
-  std::cout << "test 1 " << std::endl;
+  std::cout << "test 2 " << std::endl;
   std::cout << "new_code : " << collision(hashInput2)  << std::endl;
   std::cout << "old_code : " <<  collision(hashOutput2)  << std::endl;
 
