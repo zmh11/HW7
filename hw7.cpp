@@ -61,7 +61,6 @@ list_t hash_2( list_t list ){
   list_t noPrime = list_make();
   noPrime = filter (odd_fn , (*prime) );
   int sumNoPrime = sum(noPrime);
-
    while( !list_isEmpty(list) ){
      int temp = list_first( list );
      int insert;
@@ -69,7 +68,6 @@ list_t hash_2( list_t list ){
       insert = sumNoPrime + temp;
     else
       insert = productOdd + temp;
-
     hash = list_make( insert, hash);
     list = list_rest(list);
    }
@@ -86,7 +84,7 @@ int collision( list_t list ){
   int collision = 0;
   std::unordered_map< int,int > compare;
   while( !list_isEmpty(list) ){
-    temp = list_first( list );
+    temp = list_first( list )%16;
     if ( compare.find( temp ) == compare.end() )
       compare[temp]++;
     else
